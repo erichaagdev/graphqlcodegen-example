@@ -106,11 +106,12 @@
                     </executions>
                     <configuration>
                         <generateIsGetterForPrimitiveBooleanFields>true</generateIsGetterForPrimitiveBooleanFields>
-                        <addGeneratedAnnotation>true</addGeneratedAnnotation>
+                        <addGeneratedAnnotation>false</addGeneratedAnnotation>
                         <generateDocs>true</generateDocs>
                         <typeMappingPropertiesFiles>
                             <typeMappingPropertiesFile>graphql/common-type-mappings.properties</typeMappingPropertiesFile>
                         </typeMappingPropertiesFiles>
+                        <onlyGenerateChanged>false</onlyGenerateChanged>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -129,6 +130,109 @@
                             </configuration>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.gradle</groupId>
+                    <artifactId>develocity-maven-extension</artifactId>
+                    <configuration>
+                        <develocity>
+                            <plugins>
+                                <plugin>
+                                    <groupId>io.github.deweyjose</groupId>
+                                    <artifactId>graphqlcodegen-maven-plugin</artifactId>
+                                    <inputs>
+                                        <fileSets>
+                                            <fileSet>
+                                                <name>schemaJarFilesFromDependencies</name>
+                                                <normalization>
+                                                    <ignoreLineEndings>true</ignoreLineEndings>
+                                                </normalization>
+                                            </fileSet>
+                                            <fileSet>
+                                                <name>schemaPaths</name>
+                                                <normalization>
+                                                    <ignoreLineEndings>true</ignoreLineEndings>
+                                                </normalization>
+                                            </fileSet>
+                                            <fileSet>
+                                                <name>typeMappingPropertiesFiles</name>
+                                                <normalization>
+                                                    <ignoreLineEndings>true</ignoreLineEndings>
+                                                </normalization>
+                                            </fileSet>
+                                        </fileSets>
+                                        <properties>
+                                            <property><name>addGeneratedAnnotation</name></property>
+                                            <property><name>generateBoxedTypes</name></property>
+                                            <property><name>generateClientApi</name></property>
+                                            <property><name>generateClientApiV2</name></property>
+                                            <property><name>generateCustomAnnotations</name></property>
+                                            <property><name>generateDataTypes</name></property>
+                                            <property><name>generateDocs</name></property>
+                                            <property><name>generateInterfaceMethodsForInterfaceFields</name></property>
+                                            <property><name>generateInterfaceSetters</name></property>
+                                            <property><name>generateInterfaces</name></property>
+                                            <property><name>generateIsGetterForPrimitiveBooleanFields</name></property>
+                                            <property><name>generateKotlinClosureProjections</name></property>
+                                            <property><name>generateKotlinNullableClasses</name></property>
+                                            <property><name>implementSerializable</name></property>
+                                            <property><name>includeImports</name></property>
+                                            <property><name>includeMutations</name></property>
+                                            <property><name>includeQueries</name></property>
+                                            <property><name>includeSubscriptions</name></property>
+                                            <property><name>javaGenerateAllConstructor</name></property>
+                                            <property><name>kotlinAllFieldsOptional</name></property>
+                                            <property><name>language</name></property>
+                                            <property><name>maxProjectionDepth</name></property>
+                                            <property><name>omitNullInputFields</name></property>
+                                            <property><name>onlyGenerateChanged</name></property>
+                                            <property><name>packageName</name></property>
+                                            <property><name>shortProjectionNames</name></property>
+                                            <property><name>skip</name></property>
+                                            <property><name>skipEntityQueries</name></property>
+                                            <property><name>snakeCaseConstantNames</name></property>
+                                            <property><name>subPackageNameClient</name></property>
+                                            <property><name>subPackageNameDatafetchers</name></property>
+                                            <property><name>subPackageNameDocs</name></property>
+                                            <property><name>subPackageNameTypes</name></property>
+                                            <property><name>typeMapping</name></property>
+                                            <property><name>writeToFiles</name></property>
+                                        </properties>
+                                        <ignoredProperties>
+                                            <!-- Maven project state cannot be part of cache key -->
+                                            <ignore>project</ignore>
+                                        </ignoredProperties>
+                                    </inputs>
+                                    <iteratedProperties>
+                                        <iteratedProperty>
+                                            <name>includeClassImports</name>
+                                            <inputs>
+                                                <properties>
+                                                    <property><name>properties</name></property>
+                                                </properties>
+                                            </inputs>
+                                        </iteratedProperty>
+                                        <iteratedProperty>
+                                            <name>includeEnumImports</name>
+                                            <inputs>
+                                                <properties>
+                                                    <property><name>properties</name></property>
+                                                </properties>
+                                            </inputs>
+                                        </iteratedProperty>
+                                    </iteratedProperties>
+                                    <outputs>
+                                        <directories>
+                                            <directory><name>exampleOutputDir</name></directory>
+                                            <directory><name>generatedDocsFolder</name></directory>
+                                            <directory><name>outputDir</name></directory>
+                                        </directories>
+                                        <cacheableBecause>generates consistent outputs for declared inputs</cacheableBecause>
+                                    </outputs>
+                                </plugin>
+                            </plugins>
+                        </develocity>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
